@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { useSelector } from "react-redux";
+import Moviecard from "./microcomponents/movieCard";
 
 // const movie = {
 //   Title: "Next Avengers: Heroes of Tomorrow",
@@ -19,25 +20,8 @@ export default function SearchedResults() {
       {error === null ? (
         movies.map((element) => {
           return (
-            <div className="movieCard w-60 h-96  rounded-xl text-white px-3 py-3" key={element.imdbID}>
-              <div
-                className="img w-full h-[80%] bg-blue bg-fill rounded-xl flex relative"
-                style={{ backgroundImage: `url(${element.Poster})` }}
-              >
-                <p className="bg-red-700 block h-max w-max py-1 px-1 rounded-sm absolute bottom-3 right-3 opacity-80">
-                  {element.Type}
-                </p>
-              </div>
-              <div className="details mt-4">
-                <div className="h-[2rem]">
-                  {" "}
-                  <p className="text-xl text-clip overflow-hidden block h-full font-extrabold">
-                    {element.Title}
-                  </p>
-                </div>
-                <p className="text-sm font-light">{element.Year}</p>
-              </div>
-            </div>
+            <Moviecard element={element} key={element.imdbID}/>
+
           );
         })
       ) : (

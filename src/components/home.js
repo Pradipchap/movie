@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-row overflow-x-scroll w-full h-[75vh]">
-      <div className=" img w-full h-[75vh] flex flex-col items-center content-center justify-center">
+      <div className="img w-full h-[75vh] flex flex-col items-center content-center justify-center">
         <span className="title text-7xl font-bold tracking-widest">
           WELCOME
         </span>
