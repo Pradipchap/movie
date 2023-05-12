@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import Moviecard from "./microcomponents/movieCard";
+import { Skeleton, Stack } from "@mui/material";
 
 // const movie = {
 //   Title: "Next Avengers: Heroes of Tomorrow",
@@ -21,6 +22,7 @@ export default function SearchedResults() {
         movies.map((element) => {
           return (
             <Moviecard element={element} key={element.imdbID}/>
+
 
           );
         })

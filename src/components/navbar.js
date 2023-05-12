@@ -1,13 +1,20 @@
 import React from "react";
 // import { Link } from "react-router-dom";
 // import logo from "../logo.png";
-import { Person2TwoTone } from "@mui/icons-material";
+import { DarkMode, LightMode, Person2TwoTone } from "@mui/icons-material";
 import useSearch from "./microcomponents/searchFunc";
 import { useState } from "react";
 import { nowSliceActions } from "./redux/searched";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { colorActions } from "./redux/color";
 export default function Navbar() {
+  const colors=useSelector(state=>state.color.colors)
+  const toggleMode = () => {
+    if (mode === "dark") dispatch(colorActions.toLight());
+    else dispatch(colorActions.toDark());
+  };
+  const mode = useSelector((state) => state.color.mode);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const { status } = useSearch({ input });
@@ -22,11 +29,16 @@ export default function Navbar() {
     }
   };
   return (
-    <div className="bg-slate-900 h-16 w-full text-white flex justify-between items-center ">
-      <Link className="mx-5 " to='/'>Logo</Link>
+    <div className={`[backgroundColor:${colors.secondary}] h-16 w-full text-white flex justify-between items-center `}>
+      <Link className="mx-5 " to="/">
+        Logo
+      </Link>
       <ul className="flex content-center items-center my-auto h-full gap-2 mx-5 px-3">
-        <li className="text-white px-3">Movie</li>
-        <li className="text-white px-3">Tv shows</li>
+        <li>
+          <div className="mode" onClick={toggleMode}>
+            {mode !== "light" ? <LightMode /> : <DarkMode />}
+          </div>
+        </li>
         <li className="text-white px-3">
           <form
             onSubmit={(event) => {

@@ -57,11 +57,47 @@ export default function MoviePage() {
   }, [movieID]);
 
   return (
-    <div className="singleMovie flex flex-wrap m-5 bg-cover bg-no-repeat w-full h-[75vh]"  style={{background: `linear-gradient(red, blue,url(https://image.tmdb.org/t/p/w500${mov.movie_results[0].backdrop_path}));`}}>
-      <div className="photo w-[40rem] h-[25rem] bg-cover bg-no-repeat rounded-xl" style={{ backgroundImage: `url(https://image.tmdb.org/t/p/w500${mov.movie_results[0].poster_path})` }}>
+    <div
+      className="singleMovie flex flex-wrap w-full items-center justify-center  "
+      style={{
+        background: `linear-gradient(to bottom, rgba(13, 27, 42, 0.2), rgba(0, 17, 42, 1)), url(https://image.tmdb.org/t/p/w500${mov.movie_results[0].backdrop_path}) no-repeat center`,
+        backgroundSize: "cover",
+      }}
+    >
+      <div className="descandphoto mt-[10rem] flex flex-row items-center content-center w-full justify-center gap-5 flex-wrap relative mx-3 my-3">
+        <div
+          className="photo  h-[30rem] bg-cover bg-no-repeat rounded-xl w-[20rem] relative"
+          style={{
+            backgroundImage: `url(https://image.tmdb.org/t/p/w500${mov.movie_results[0].poster_path})`,
+          }}
+        >
+          <p className="bg-red-500 block h-max w-max py-1 px-1 rounded-sm absolute bottom-3 right-3 opacity-90">
+            {mov.movie_results[0].media_type}
+          </p>
+        </div>
+        <div className="desc text-white w-[50%] flex flex-col gap-5">
+          <p className="title text-5xl font-bold">
+            {mov.movie_results[0].title}
+          </p>
+          <div className="ratings flex gap-3">
+            {/* <div className="circlerating h-[3rem] w-[3rem] rounded-full bg-red-500 flex items-center justify-center">
+              <div className="h-[2rem] w-[2rem] bg-blue-600 rounded-full"></div>
+            </div> */}
+            <p className="imdb px-2 py-1 bg-red-600 w-max rounded-xl">
+              {Math.ceil(mov.movie_results[0].popularity) + "%"}
+            </p>
+            <p className="imdb px-2 py-1 bg-red-600 w-max rounded-xl">
+              {mov.movie_results[0].vote_average.toPrecision(2)}
+            </p>
+          </div>
 
+          <p className="date flex flex-col text-2xl gap-2">
+            <p className="date">{mov.movie_results[0].release_date}</p>
+          </p>
+          <p className="overview text-md">{mov.movie_results[0].overview}</p>
+        </div>
       </div>
-      <div className="desc">{mov.movie_results[0].original_title}</div>
+
       {/* {movie.movie_results[0].title!==undefined?<p>{movie.movie_results[0].title}</p>:<p>{movie.tv_results[0].name}</p>} */}
     </div>
   );
