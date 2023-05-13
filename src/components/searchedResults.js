@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import Moviecard from "./microcomponents/movieCard";
 import { Skeleton, Stack } from "@mui/material";
+import Moviecomponent from "./moviecomponent";
 
 // const movie = {
 //   Title: "Next Avengers: Heroes of Tomorrow",
@@ -17,19 +18,8 @@ export default function SearchedResults() {
 
   const movies = useSelector((state) => state.nowPlaying.movies);
   return (
-    <div className="flex flex-wrap items-center justify-center mt-5 content-center">
-      {error === null ? (
-        movies.map((element) => {
-          return (
-            <Moviecard element={element} key={element.imdbID}/>
+    <Moviecomponent movies={movies} error={error}/>
 
-
-          );
-        })
-      ) : (
-        <h1 className="text-white">{error}</h1>
-      )}
-    </div>
   );
 }
 // {movies.map((element)=>{

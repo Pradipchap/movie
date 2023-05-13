@@ -3,28 +3,37 @@ import { createSlice } from "@reduxjs/toolkit";
 const colorSlice = createSlice({
   name: "color",
   initialState: {
-    mode: "light",
+    mode:
+      localStorage.getItem("mode") === "dark"
+        ? localStorage.getItem("mode")
+        : "light",
     colors: {
-      primary: "#a9990f",
-      secondary: "#0f1fa9",
+      primary: "#002253",
+      secondary: "#020873",
       tertiary: "#0fa94c",
       fourth: "#a90f6c",
+      text: "black",
     },
   },
   reducers: {
     toDark(state, action) {
       state.mode = "dark";
-      state.colors.primary = "";
-      state.colors.secondary = "";
-      state.colors.tertiary = "";
-      state.colors.fourth = "";
+      state.colors.primary = "#1c1d21";
+      state.colors.secondary = "#21201c";
+      state.colors.tertiary = "#4f3f37";
+      state.colors.fourth = "#3b4f37";
+      state.colors.text = "white";
+      document.body.style.backgroundColor = "#1c1d21";
     },
     toLight(state, action) {
       state.mode = "light";
-      state.colors.primary = "#a9990f";
-      state.colors.secondary = "#0f1fa9";
+
+      state.colors.primary = "#002253";
+      state.colors.secondary = "#002253";
       state.colors.tertiary = "#0fa94c";
       state.colors.fourth = "#a90f6c";
+      state.colors.text = "black";
+      document.body.style.backgroundColor = "#fff";
     },
   },
 });

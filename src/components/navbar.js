@@ -9,10 +9,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { colorActions } from "./redux/color";
 export default function Navbar() {
-  const colors=useSelector(state=>state.color.colors)
+  const colors = useSelector((state) => state.color.colors);
   const toggleMode = () => {
-    if (mode === "dark") dispatch(colorActions.toLight());
-    else dispatch(colorActions.toDark());
+    if (mode === "dark") {
+      localStorage.setItem("mode", "light");
+      dispatch(colorActions.toLight());
+    } else {
+      localStorage.setItem("mode", "dark");
+      dispatch(colorActions.toDark());
+    }
   };
   const mode = useSelector((state) => state.color.mode);
   const dispatch = useDispatch();
@@ -29,7 +34,10 @@ export default function Navbar() {
     }
   };
   return (
-    <div className={`[backgroundColor:${colors.secondary}] h-16 w-full text-white flex justify-between items-center `}>
+    <div
+      style={{ backgroundColor: colors.primary }}
+      className={` h-16 w-full text-white flex justify-between items-center `}
+    >
       <Link className="mx-5 " to="/">
         Logo
       </Link>
@@ -40,22 +48,24 @@ export default function Navbar() {
           </div>
         </li>
         <li className="text-white px-3">
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              sendSearch(event.target[0].value);
-            }}
-          >
-            {" "}
-            <input
-              className="h-[80%] text-white bg-gray-700 py-1 text-xl rounded-lg px-2"
-              type="search"
-              placeholder=""
-              name="search"
-              id="search"
-              // onChange={(e)=>{e.preventDefault();setinput(e.target.value)}}
-            />
-          </form>
+          {window.location.pathname !== "/" && (
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                sendSearch(event.target[0].value);
+              }}
+            >
+              {" "}
+              <input
+                className="h-[80%] text-white bg-gray-700 py-1 text-xl rounded-lg px-2"
+                type="search"
+                placeholder=""
+                name="search"
+                id="search"
+                // onChange={(e)=>{e.preventDefault();setinput(e.target.value)}}
+              />
+            </form>
+          )}
         </li>
         <li className="text-white">
           <Person2TwoTone />
@@ -64,3 +74,4 @@ export default function Navbar() {
     </div>
   );
 }
+// window. location. href

@@ -1,11 +1,13 @@
 .App {
   text-align: center;
 }
-body{
+
+body {
   background-color: #00112a;
   background-color: rgb(196, 180, 84);
-
-background-color: rgb(159, 124, 11);
+  background-color: rgb(159, 124, 11);
+  background-color: #002253;
+  background-color: #fff;
 }
 
 .App-logo {
@@ -38,6 +40,7 @@ background-color: rgb(159, 124, 11);
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

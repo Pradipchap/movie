@@ -1,7 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function Moviecard({ element }) {
+  const colors=useSelector(state=>state.color.colors)
     const navigate=useNavigate()
     const openMoviePage=()=>{
         navigate(`/movie/${element.imdbID}`)
@@ -23,11 +25,11 @@ export default function Moviecard({ element }) {
       <div className="details mt-4">
         <div className="h-[2rem]">
           {" "}
-          <p className="text-xl text-clip overflow-hidden block h-full font-extrabold">
+          <p className={`text-xl text-clip overflow-hidden block h-full font-extrabold  ${"text-"+colors.text}`}>
             {element.Title}
           </p>
         </div>
-        <p className="text-sm font-light">{element.Year}</p>
+        <p className={`text-sm font-light ${"text-"+colors.text}`}>{element.Year}</p>
       </div>
     </div>
   );
