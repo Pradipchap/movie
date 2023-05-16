@@ -4,7 +4,7 @@ import Navbar from "./components/navbar";
 import Home from "./components/home";
 import { useEffect } from "react";
 
-import { getNowPlayingMovies } from "./components/redux/searched";
+import { getNowPlayingMovies, getNowSingle } from "./components/redux/searched";
 import { useDispatch, useSelector } from "react-redux";
 import { nowSliceActions } from "./components/redux/searched";
 import SearchedResults from "./components/searchedResults";
@@ -13,19 +13,98 @@ import { NoPage } from "./components/noPage";
 import { colorActions } from "./components/redux/color";
 function App() {
   const dispatch = useDispatch();
-const mode=useSelector((state)=>state.color.mode)
+  const whenID = useSelector(
+    (state) => state.nowPlaying.forMovieComponentWhenSearchedWithID
+  );
   const string = useSelector((state) => state.nowPlaying.searchString);
-  const array = useSelector((state) => state.nowPlaying.movies);
-  const error = useSelector((state) => state.nowPlaying.error);
 
-  useEffect(() => {
-    if (string === null || string === undefined) {
-      if (localStorage.getItem("search"))
-        dispatch(getNowPlayingMovies(localStorage.getItem("search")));
+  const pageNo = useSelector((state) => state.nowPlaying.pageNo);
+  function identifyMovie(argument) {
+    if (
+      argument.startsWith("tt") &&
+      argument.length === 9 &&
+      !isNaN(argument.slice(2))
+    ) {
+      return "ID";
     } else {
-      dispatch(getNowPlayingMovies(string));
+      return "Title";
     }
-  }, [dispatch, string]);
+  }
+  // useEffect(() => {
+  //   const getmov = () => {
+  //     console.log("page no is", pageNo);
+  //     if (string === null || string === undefined) {
+  //       if (localStorage.getItem("search")) {
+  //         if (identifyMovie(localStorage.getItem("search")) === "Title") {
+  //           dispatch(
+  //             getNowPlayingMovies(localStorage.getItem("search"), pageNo)
+  //           );
+  //           dispatch(getNowSingle({ title: localStorage.getItem("search") }));
+  //         }
+  //       }
+  //     } else {
+  //       if (identifyMovie(string) === "Title") {
+  //         dispatch(getNowPlayingMovies(string, pageNo));
+  //         dispatch(getNowSingle({ title: string }));
+  //       }
+  //     }
+  //   };
+  //   getmov();
+  // }, [dispatch, pageNo, string]);
+  const x = async (id) => {
+    let a = await fetch(`http://www.omdbapi.com/?i=${id}&apikey=46cb632b`);
+    let parsed = await a.json();
+    let title = await parsed.Title;
+    return await title;
+  };
+  useEffect(() => {
+    const getmov = async() => {
+      if (string === null || string === undefined) {
+        if (localStorage.getItem("search")) {
+          if (identifyMovie(localStorage.getItem("search")) === "Title") {
+            dispatch(
+              getNowPlayingMovies(localStorage.getItem("search"), pageNo)
+            );
+            dispatch(getNowSingle({ title: localStorage.getItem("search") }));
+          } else {
+            let value=await x(localStorage.getItem("search"))
+            dispatch(getNowPlayingMovies(value));
+           await dispatch(getNowSingle({ id: localStorage.getItem("search") }));
+          }
+        }
+      } else {
+        if (identifyMovie(string) === "Title") {
+          dispatch(getNowPlayingMovies(string,pageNo));
+          dispatch(getNowSingle({ title: string }));
+        } else {
+          let value=await x(string)
+         await dispatch(getNowPlayingMovies(value,pageNo));
+          dispatch(getNowSingle({ id: string }));
+        }
+      }
+    };
+    getmov();
+  }, [dispatch, pageNo, string]);
+
+  // useEffect(() => {
+  //   const getmov = () => {
+  //     // console.log("page no is", pageNo);
+  //     if (string === null || string === undefined) {
+  //       if (localStorage.getItem("search")) {
+  //         if (identifyMovie(localStorage.getItem("search")) === "ID") {
+  //           dispatch(getNowSingle({ id: localStorage.getItem("search") }));
+  //           dispatch(getNowPlayingMovies(whenID, pageNo));
+  //         }
+  //       }
+  //     } else {
+  //       if (identifyMovie(string) === "ID") {
+  //         dispatch(getNowSingle({ id: string }));
+  //         dispatch(getNowPlayingMovies(whenID, pageNo));
+  //       }
+  //     }
+  //   };
+  //   getmov();
+  // }, [dispatch, string, pageNo, whenID]);
 
   // useEffect(() => {
   //   console.log("array", array);
@@ -33,12 +112,9 @@ const mode=useSelector((state)=>state.color.mode)
   // useEffect(() => {
   //   console.log("errpr", error);
   // }, [error]);
-useEffect(() => {
-localStorage.getItem('mode')==="dark"&&dispatch(colorActions.toDark())
-}, [dispatch])
-
-  
-  
+  useEffect(() => {
+    localStorage.getItem("mode") === "dark" && dispatch(colorActions.toDark());
+  }, [dispatch]);
 
   return (
     <>

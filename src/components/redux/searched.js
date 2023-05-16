@@ -6,10 +6,19 @@ const nowSlice = createSlice({
     movies: [],
     error: null,
     searchString: null,
+    loading: true,
+    pageNo: 1,
+    totalResults: 0,
+    singleMovie: {},
+    forMovieComponentWhenSearchedWithID: null,
   },
   reducers: {
+    setloading(state, action) {
+      state.loading = action.payload;
+    },
     getNowMovies(state, action) {
-      state.movies = action.payload;
+      state.movies = action.payload.movies;
+      state.totalResults = action.payload.totalResults;
     },
     getError(state, action) {
       state.error = action.payload;
@@ -17,35 +26,58 @@ const nowSlice = createSlice({
     getString(state, action) {
       state.searchString = action.payload;
     },
+    getPageNo(state, action) {
+      state.pageNo = action.payload;
+    },
+    setSingleMovie(state, action) {
+      state.singleMovie = action.payload;
+    },
+    getWhenID(state, action) {
+      state.forMovieComponentWhenSearchedWithID = action.payload;
+    },
   },
 });
-
-export const getNowPlayingMovies = (string) => {
+export const getNowPlayingMovies = (string, pageNo) => {
   return async (dispatch) => {
     const search = async () => {
       const fetchedData = await fetch(
-        `http://www.omdbapi.com/?s=${string}&apikey=46cb632b`
+        `http://www.omdbapi.com/?s=${string}&page=${pageNo}&apikey=46cb632b`
       )
         .then((response) => response.json())
-        .then((response) =>
+        .then((response) => {
+          console.log(response);
+          console.log(response.totalResults);
           response.Response === "False"
             ? dispatch(nowSliceActions.getError(response.Error))
-            : dispatch(nowSliceActions.getNowMovies(response.Search))
-        );
+            : dispatch(
+                nowSliceActions.getNowMovies({
+                  movies: response.Search,
+                  totalResults: response.totalResults,
+                })
+              ) && dispatch(nowSliceActions.getError(null));
+          dispatch(nowSliceActions.setloading(false));
+        });
+    };
 
-      // const parsedData = await fetchedData.json();
-      //  if(await parsedData.Response===true){
-      //     await dispatch(nowSliceActions.getNowMovies(parsedData.Search))
-
-      //   }
-      //   else{
-      //     await dispatch(nowSliceActions.getError(parsedData.Error));
-
-      //   }
-      // (await parsedData.Response) === true
-      //   ?  await dispatch(nowSliceActions.getNowMovies(parsedData.Search))
-      //   : await dispatch(nowSliceActions.getError(parsedData.Error));
-      //   await console.log("parseddata",parsedData)
+    search();
+  };
+};
+export const getNowSingle = ({ id, title }) => {
+  return async (dispatch) => {
+    const search = async () => {
+      const fetchedData = await fetch(
+        id
+          ? `http://www.omdbapi.com/?i=${id}&apikey=46cb632b`
+          : `http://www.omdbapi.com/?t=${title}&apikey=46cb632b`
+      )
+        .then((response) => response.json())
+        .then((response) => {
+          console.log("single", response);
+          response.Response === "False"
+            ? dispatch(nowSliceActions.getError(response.Error))
+            : dispatch(nowSliceActions.setSingleMovie(response));
+          dispatch(nowSliceActions.setloading(false));
+        });
     };
 
     search();

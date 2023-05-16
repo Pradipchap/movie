@@ -22,9 +22,9 @@ export default function Selector() {
           label="Age"
           onChange={handleChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={10}>search by Id </MenuItem>
+          <MenuItem value={20}>search by name</MenuItem>
+
         </Select>
       </FormControl>
     </Box>

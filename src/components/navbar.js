@@ -8,6 +8,7 @@ import { nowSliceActions } from "./redux/searched";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { colorActions } from "./redux/color";
+import logo from "../logo.png";
 export default function Navbar() {
   const colors = useSelector((state) => state.color.colors);
   const toggleMode = () => {
@@ -36,11 +37,11 @@ export default function Navbar() {
   return (
     <div
       style={{ backgroundColor: colors.primary }}
-      className={` h-16 w-full text-white flex justify-between items-center `}
+      className={` h-16 w-full text-white flex justify-between items-center relative z-10 `}
     >
-      <Link className="mx-5 " to="/">
-        Logo
-      </Link>
+      <a className="mx-1  w-[15rem] " href="/">
+        <img src={logo} alt="logo" className="w-full h-full" />
+      </a>
       <ul className="flex content-center items-center my-auto h-full gap-2 mx-5 px-3">
         <li>
           <div className="mode" onClick={toggleMode}>
@@ -57,9 +58,9 @@ export default function Navbar() {
             >
               {" "}
               <input
-                className="h-[80%] text-white bg-gray-700 py-1 text-xl rounded-lg px-2"
+                className="h-[80%] text-white bg-gray-700 py-1 text-xl rounded-lg px-2 w-[9rem] max-w-[20rem]"
                 type="search"
-                placeholder=""
+                placeholder="search"
                 name="search"
                 id="search"
                 // onChange={(e)=>{e.preventDefault();setinput(e.target.value)}}

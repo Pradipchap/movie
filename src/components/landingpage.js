@@ -2,8 +2,10 @@ import React from "react";
 import { nowSliceActions } from "./redux/searched";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import "./landingpage.css";
 
 import { useNavigate } from "react-router-dom";
+import Selector from "./microcomponents/selelctor";
 export const Landingpage = () => {
   const colors = useSelector((state) => state.color.colors);
 
@@ -41,7 +43,7 @@ export const Landingpage = () => {
     }
   };
   return (
-    <div className="flex flex-row  w-full h-[60vh]">
+    <div className="flex flex-row  w-full h-[30rem] ">
       <div
         className="img w-full h-full flex flex-col items-center content-center justify-center"
         style={{
@@ -49,15 +51,17 @@ export const Landingpage = () => {
           ), url(${moviePoster[bg]}) no-repeat center`,
         }}
       >
-        <span className={`title text-7xl font-bold tracking-widest`}>
+        <span
+          className={`title text-7xl font-bold tracking-widest text-white `}
+        >
           Welcome
         </span>
-        <span className="subTitle tracking-widest font-light my-3">
+        <span className="subTitle tracking-widest font-light my-3  text-white">
           Millons of movies, series & shows. Explore now.
         </span>
 
         <form
-          className="search  flex items-center w-[50%] mt-5"
+          className="search  flex items-center mt-5 w-[80%] justify-center"
           onSubmit={(e) => {
             e.preventDefault();
             setsearchName(e.target[0].value);
@@ -66,7 +70,7 @@ export const Landingpage = () => {
         >
           <input
             type="search"
-            className=" text-black text-2xl px-5 w-[100%] "
+            className=" text-black text-2xl  "
             placeholder="search a movie or tv show..."
             onChange={(e) => setsearchName(e.target.value)}
           />
