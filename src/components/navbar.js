@@ -1,16 +1,15 @@
 import React from "react";
-// import { Link } from "react-router-dom";
-// import logo from "../logo.png";
 import { DarkMode, LightMode, Person2TwoTone } from "@mui/icons-material";
-import useSearch from "./microcomponents/searchFunc";
-import { useState } from "react";
 import { nowSliceActions } from "./redux/searched";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { colorActions } from "./redux/color";
 import logo from "../logo.png";
+
 export default function Navbar() {
-  const colors = useSelector((state) => state.color.colors);
+  const colors = useSelector((state) => state.color.colors); //colors from redux store
+
+  // function that toggle bwtween modes
   const toggleMode = () => {
     if (mode === "dark") {
       localStorage.setItem("mode", "light");
@@ -20,17 +19,20 @@ export default function Navbar() {
       dispatch(colorActions.toDark());
     }
   };
+
   const mode = useSelector((state) => state.color.mode);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const { status } = useSearch({ input });
+
+  //function that takes user INPUT and dispatches as a search string
   const sendSearch = (searchName) => {
     const string = searchName;
-    if (string === "" || string === null || string === undefined) {
+    if (string === "" || string === null || string === undefined||string.trim().length===0) {
       // navigate('/')
     } else {
       dispatch(nowSliceActions.getString(string));
       localStorage.setItem("search", string);
+      //after dispatching ...navigate to searched page
       navigate("/search");
     }
   };
@@ -49,7 +51,10 @@ export default function Navbar() {
           </div>
         </li>
         <li className="text-white px-3">
-          {window.location.pathname !== "/" && (
+
+          
+          {//to show search bar on navbar only inside searched page
+          window.location.pathname !== "/" && (
             <form
               onSubmit={(event) => {
                 event.preventDefault();
@@ -63,7 +68,7 @@ export default function Navbar() {
                 placeholder="search"
                 name="search"
                 id="search"
-                // onChange={(e)=>{e.preventDefault();setinput(e.target.value)}}
+
               />
             </form>
           )}

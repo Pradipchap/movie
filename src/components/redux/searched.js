@@ -4,7 +4,8 @@ const nowSlice = createSlice({
   name: "nowSlice",
   initialState: {
     movies: [],
-    error: null,
+    errorForArray: null,
+    errorForSingle: null,
     searchString: null,
     loading: true,
     pageNo: 1,
@@ -21,7 +22,8 @@ const nowSlice = createSlice({
       state.totalResults = action.payload.totalResults;
     },
     getError(state, action) {
-      state.error = action.payload;
+      state.errorForArray = action.payload.errorForArray;
+      state.errorForSingle = action.payload.errorForSingle;
     },
     getString(state, action) {
       state.searchString = action.payload;
@@ -40,6 +42,7 @@ const nowSlice = createSlice({
 export const getNowPlayingMovies = (string, pageNo) => {
   return async (dispatch) => {
     const search = async () => {
+
       const fetchedData = await fetch(
         `http://www.omdbapi.com/?s=${string}&page=${pageNo}&apikey=46cb632b`
       )
@@ -48,13 +51,15 @@ export const getNowPlayingMovies = (string, pageNo) => {
           console.log(response);
           console.log(response.totalResults);
           response.Response === "False"
-            ? dispatch(nowSliceActions.getError(response.Error))
+            ? dispatch(
+                nowSliceActions.getError({ errorForArray: response.Error })
+              )
             : dispatch(
                 nowSliceActions.getNowMovies({
                   movies: response.Search,
                   totalResults: response.totalResults,
                 })
-              ) && dispatch(nowSliceActions.getError(null));
+              ) && dispatch(nowSliceActions.getError({ errorForArray: null }));
           dispatch(nowSliceActions.setloading(false));
         });
     };
@@ -74,8 +79,10 @@ export const getNowSingle = ({ id, title }) => {
         .then((response) => {
           console.log("single", response);
           response.Response === "False"
-            ? dispatch(nowSliceActions.getError(response.Error))
-            : dispatch(nowSliceActions.setSingleMovie(response));
+            ? dispatch(
+                nowSliceActions.getError({ errorForSingle: response.Error })
+              )
+            : dispatch(nowSliceActions.setSingleMovie(response)) 
           dispatch(nowSliceActions.setloading(false));
         });
     };

@@ -1,33 +1,24 @@
-import React, { useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Moviecard from "./microcomponents/movieCard";
-import { Skeleton, Stack } from "@mui/material";
+import React from "react";
+import { useSelector } from "react-redux";
+
 import Moviecomponent from "./moviecomponent";
-import { getNowPlayingMovies, nowSliceActions } from "./redux/searched";
+
 import Loader from "./microcomponents/loader";
 import Pagetransiton from "./microcomponents/pageTransitioner";
 import Singlemovie from "./singleMovie";
 
-// const movie = {
-//   Title: "Next Avengers: Heroes of Tomorrow",
-//   Year: "2008",
-//   imdbID: "tt1259998",
-//   Type: "movie",
-//   Poster:
-//     "https://m.media-amazon.com/images/M/MV5BMTQ3NjExNjY4N15BMl5BanBnXkFtZTcwNTczODkwNQ@@._V1_SX300.jpg",
-// };
-
 export default function SearchedResults() {
-  const dispatch = useDispatch();
-  const error = useSelector((state) => state.nowPlaying.error);
+  //error while fetching data
+  const error = useSelector((state) => state.nowPlaying.errorForArray);
 
+  //loading state..if loading is true rendering spinner component
   const loading = useSelector((state) => state.nowPlaying.loading);
 
-  // const error = useSelector((state) => state.nowPlaying.error);
-
+  //array of fetched movies
   const movies = useSelector((state) => state.nowPlaying.movies);
-  const data = useSelector((state) => state.nowPlaying.singleMovie);
 
+  //single movie object
+  const data = useSelector((state) => state.nowPlaying.singleMovie);
 
   const colors = useSelector((state) => state.color.colors);
 
@@ -42,10 +33,7 @@ export default function SearchedResults() {
         }`}
       >{`Based on you search`}</p>
       <Moviecomponent movies={movies} error={error} />
-<div className="self-center">      <Pagetransiton /></div>
+      <div className="self-center">{ <Pagetransiton />}</div>
     </div>
   );
 }
-// {movies.map((element)=>{
-//     return <h1 key={element.Title}>{element.Title}</h1>
-// })}

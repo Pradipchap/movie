@@ -2,63 +2,20 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Skeleton } from "@mui/material";
+
 import Loader from "./microcomponents/loader";
 import "./opacity.css";
-import Rating from "./microcomponents/rating";
-import CircularStatic from "./microcomponents/rating";
+
 import CircularProgressWithLabel from "./microcomponents/rating";
 export default function MoviePage() {
   const [loading, setloading] = useState(true);
-  const { movieID } = useParams();
+  const { movieID } = useParams(); //for dynamic routing
   const [movie, setmovie] = useState([]);
   const colors = useSelector((state) => state.color.colors);
-  // const movie = {
-  //   Title: "The Avengers",
-  //   Year: "2012",
-  //   Rated: "PG-13",
-  //   Released: "04 May 2012",
-  //   Runtime: "143 min",
-  //   Genre: "Action, Sci-Fi",
-  //   Director: "Joss Whedon",
-  //   Writer: "Joss Whedon, Zak Penn",
-  //   Actors: "Robert Downey Jr., Chris Evans, Scarlett Johansson",
-  //   Plot: "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.",
-  //   Language: "English, Russian",
-  //   Country: "United States",
-  //   Awards: "Nominated for 1 Oscar. 38 wins & 80 nominations total",
-  //   Poster:
-  //     "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
-  //   Ratings: [
-  //     {
-  //       Source: "Internet Movie Database",
-  //       Value: "8.0/10",
-  //     },
-  //     {
-  //       Source: "Rotten Tomatoes",
-  //       Value: "91%",
-  //     },
-  //     {
-  //       Source: "Metacritic",
-  //       Value: "69/100",
-  //     },
-  //   ],
-  //   Metascore: "69",
-  //   imdbRating: "8.0",
-  //   imdbVotes: "1,411,647",
-  //   imdbID: "tt0848228",
-  //   Type: "movie",
-  //   DVD: "25 Sep 2012",
-  //   BoxOffice: "$623,357,910",
-  //   Production: "N/A",
-  //   Website: "N/A",
-  //   Response: "True",
-  // };
 
+  //fetch data baout a particular movie based on id
   useEffect(() => {
     setloading(true);
-
-    // setloading(true);
 
     fetch(`http://www.omdbapi.com/?i=${movieID}&apikey=46cb632b`)
       .then((response) => response.json())
@@ -146,24 +103,16 @@ export default function MoviePage() {
               >
                 Plot
               </p>
-              <p
-                className={`overview text-md   ${
-                  "text-" + colors.text
-                }`}
-              >
+              <p className={`overview text-md   ${"text-" + colors.text}`}>
                 {movie.Plot}
               </p>
               <div className="flex  gap-3 flex-col">
                 <p className="text-xl font-bold">Released Date</p>
                 <div>
-                  <p
-                    className={` date  ${"text-" + colors.text} `}
-                  >
+                  <p className={` date  ${"text-" + colors.text} `}>
                     <b>Theater:</b> {movie.Released}
                   </p>
-                  <p
-                    className={` date  ${"text-" + colors.text} `}
-                  >
+                  <p className={` date  ${"text-" + colors.text} `}>
                     <b>DVD:</b> {movie.DVD}
                   </p>
                 </div>

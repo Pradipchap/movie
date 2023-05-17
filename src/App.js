@@ -6,19 +6,21 @@ import { useEffect } from "react";
 
 import { getNowPlayingMovies, getNowSingle } from "./components/redux/searched";
 import { useDispatch, useSelector } from "react-redux";
-import { nowSliceActions } from "./components/redux/searched";
+
 import SearchedResults from "./components/searchedResults";
 import MoviePage from "./components/moviePage";
 import { NoPage } from "./components/noPage";
 import { colorActions } from "./components/redux/color";
 function App() {
   const dispatch = useDispatch();
-  const whenID = useSelector(
-    (state) => state.nowPlaying.forMovieComponentWhenSearchedWithID
-  );
+
+  //string inputed by user in input box
   const string = useSelector((state) => state.nowPlaying.searchString);
 
+  //page no from page transitioned
   const pageNo = useSelector((state) => state.nowPlaying.pageNo);
+
+  //function to identify whether the string input of user is a IMDB id of a movie or its title
   function identifyMovie(argument) {
     if (
       argument.startsWith("tt") &&
@@ -30,55 +32,46 @@ function App() {
       return "Title";
     }
   }
-  // useEffect(() => {
-  //   const getmov = () => {
-  //     console.log("page no is", pageNo);
-  //     if (string === null || string === undefined) {
-  //       if (localStorage.getItem("search")) {
-  //         if (identifyMovie(localStorage.getItem("search")) === "Title") {
-  //           dispatch(
-  //             getNowPlayingMovies(localStorage.getItem("search"), pageNo)
-  //           );
-  //           dispatch(getNowSingle({ title: localStorage.getItem("search") }));
-  //         }
-  //       }
-  //     } else {
-  //       if (identifyMovie(string) === "Title") {
-  //         dispatch(getNowPlayingMovies(string, pageNo));
-  //         dispatch(getNowSingle({ title: string }));
-  //       }
-  //     }
-  //   };
-  //   getmov();
-  // }, [dispatch, pageNo, string]);
+
+  //function that takes id as an argument to return title of the movie based
+  //on id ...when user inputs IMDB id
   const x = async (id) => {
     let a = await fetch(`http://www.omdbapi.com/?i=${id}&apikey=46cb632b`);
     let parsed = await a.json();
     let title = await parsed.Title;
     return await title;
   };
+
+  // it dispatches a function that fetches movie data based on user input that may be id or titlte
   useEffect(() => {
-    const getmov = async() => {
+    const getmov = async () => {
       if (string === null || string === undefined) {
+        //if user refreshes page ..input string may be null
         if (localStorage.getItem("search")) {
+          //when refreshing it extracts from localstorage
           if (identifyMovie(localStorage.getItem("search")) === "Title") {
+            //if the input string is a tilte
             dispatch(
               getNowPlayingMovies(localStorage.getItem("search"), pageNo)
             );
             dispatch(getNowSingle({ title: localStorage.getItem("search") }));
           } else {
-            let value=await x(localStorage.getItem("search"))
+            //if input string is a ID
+            let value = await x(localStorage.getItem("search"));
             dispatch(getNowPlayingMovies(value));
-           await dispatch(getNowSingle({ id: localStorage.getItem("search") }));
+            await dispatch(
+              getNowSingle({ id: localStorage.getItem("search") })
+            );
           }
         }
       } else {
+        //if user inputs first time
         if (identifyMovie(string) === "Title") {
-          dispatch(getNowPlayingMovies(string,pageNo));
+          dispatch(getNowPlayingMovies(string, pageNo));
           dispatch(getNowSingle({ title: string }));
         } else {
-          let value=await x(string)
-         await dispatch(getNowPlayingMovies(value,pageNo));
+          let value = await x(string);
+          await dispatch(getNowPlayingMovies(value, pageNo));
           dispatch(getNowSingle({ id: string }));
         }
       }
@@ -86,32 +79,7 @@ function App() {
     getmov();
   }, [dispatch, pageNo, string]);
 
-  // useEffect(() => {
-  //   const getmov = () => {
-  //     // console.log("page no is", pageNo);
-  //     if (string === null || string === undefined) {
-  //       if (localStorage.getItem("search")) {
-  //         if (identifyMovie(localStorage.getItem("search")) === "ID") {
-  //           dispatch(getNowSingle({ id: localStorage.getItem("search") }));
-  //           dispatch(getNowPlayingMovies(whenID, pageNo));
-  //         }
-  //       }
-  //     } else {
-  //       if (identifyMovie(string) === "ID") {
-  //         dispatch(getNowSingle({ id: string }));
-  //         dispatch(getNowPlayingMovies(whenID, pageNo));
-  //       }
-  //     }
-  //   };
-  //   getmov();
-  // }, [dispatch, string, pageNo, whenID]);
-
-  // useEffect(() => {
-  //   console.log("array", array);
-  // }, [array]);
-  // useEffect(() => {
-  //   console.log("errpr", error);
-  // }, [error]);
+  //to change mode if user has already choose a mode which is saved on localstorage
   useEffect(() => {
     localStorage.getItem("mode") === "dark" && dispatch(colorActions.toDark());
   }, [dispatch]);
@@ -125,7 +93,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/search" element={<SearchedResults />} />
           <Route exact path="/movie/:movieID" element={<MoviePage />} />
-          <Route path="*" element={<NoPage />} />
+          <Route path="*" element={<NoPage />} />{/* for incorrect addresses*/}
         </Routes>
       </Router>
     </>

@@ -5,10 +5,13 @@ import { useEffect, useState } from "react";
 import "./landingpage.css";
 
 import { useNavigate } from "react-router-dom";
-import Selector from "./microcomponents/selelctor";
+
 export const Landingpage = () => {
+  //colors from redux store
   const colors = useSelector((state) => state.color.colors);
 
+
+//movie poster backgrounds form landing page
   const moviePoster = [
     "https://wallpapercave.com/wp/wp10615928.jpg",
     "https://wallpapercave.com/dwp2x/wp10615910.jpg",
@@ -20,6 +23,8 @@ export const Landingpage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+
+  //to change background on every 10 seconds
   useEffect(() => {
     const intervalId = setInterval(() => {
       const setb = () => {
@@ -32,14 +37,18 @@ export const Landingpage = () => {
     return () => clearInterval(intervalId);
   }, [bg]);
 
+
+  //function that takes user INPUT and dispatches as a search string
   const sendSearch = () => {
     const string = searchName;
-    if (string === "" || string === null || string === undefined) {
-      // navigate('/')
+    if (string === "" || string === null || string === undefined||string.trim().length===0) {
+
     } else {
       dispatch(nowSliceActions.getString(string));
       localStorage.setItem("search", string);
+      //after dispatching navigating to search page
       navigate("/search");
+
     }
   };
   return (

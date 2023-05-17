@@ -5,8 +5,11 @@ import { useNavigate } from "react-router-dom";
 export default function Moviecard({ element }) {
   const colors = useSelector((state) => state.color.colors);
   const navigate = useNavigate();
+
+  //click function that navigates to a single movie details using dynamic routing
   const openMoviePage = () => {
     navigate(`/movie/${element.imdbID}`);
+    //using movie IMDB ID
   };
   return (
     <div

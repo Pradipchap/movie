@@ -1,20 +1,23 @@
 import React from "react";
 import Moviecard from "./microcomponents/movieCard";
-import { useDispatch, useSelector } from "react-redux";
-import { nowSliceActions } from "./redux/searched";
+import { useSelector } from "react-redux";
 
 export default function Singlemovie({ element }) {
   const colors = useSelector((state) => state.color.colors);
-  
+  const error = useSelector((state) => state.nowPlaying.errorForSingle);
   return (
-    element  && (
+    element && (
       <div className="flex flex-col ">
         <p
           className={`recent text-2xl font-sans mx-4 mt-[4rem] font-semibold ${
             "text-" + colors.text
           }`}
         >{`Result`}</p>
-        <Moviecard element={element} />
+        {error ? (
+          <p className={`${"text-" + colors.text} mx-5 my-5`}>{error}</p>
+        ) : (
+          <Moviecard element={element} />
+        )}
       </div>
     )
   );

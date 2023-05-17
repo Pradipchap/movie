@@ -1,18 +1,65 @@
-# Getting Started with Create React App
+![logo copy](https://github.com/Pradipchap/movie/assets/110084844/720f23ee-9576-40f7-8a47-abe49c535370)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Movieworld
 
-## Available Scripts
+A website to search movie and tv series using Title or IMDB Id
+using React js and OMDB api
 
-In the project directory, you can run:
 
-### `npm start`
+## Authors
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [@Pradipchap](https://github.com/Pradipchap)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+
+## Technologies Used
+- React Js
+- Tailwind CSS
+- Redux/Toolkit
+- Material UI
+- OMDB API
+
+
+
+
+## Features
+
+- Light/dark mode toggle
+- Query using movie title or ID
+- Returns related movies that starts with same title
+- Automatically returns related movies even when searched using ID
+
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/Pradipchap/movie.git
+```
+
+Go to the project directory
+
+```bash
+  cd my-project
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run start
+```
+
+
+## Deployment
+
+To host  this project run
 
 ### `npm test`
 
@@ -27,7 +74,6 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### `npm run eject`
 
@@ -35,36 +81,19 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+## Demo
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Some Screenshots of the website
+![alt text](https://github.com/Pradipchap/movie/assets/110084844/1dae2939-fcc8-473d-9f76-bcecbc081a6d)
+![alt text](https://github.com/Pradipchap/movie/assets/110084844/f6b29e2e-7f25-4eec-bd39-038e0c950e25)
+![alt text](https://github.com/Pradipchap/movie/assets/110084844/664441e4-509a-46a8-8e6e-036b02cbe05f)
 
-### Analyzing the Bundle Size
+![alt text](https://github.com/Pradipchap/movie/assets/110084844/9a0552c3-d619-49fb-a5c5-56f66aac7550)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![alt text](https://github.com/Pradipchap/movie/assets/110084844/a2039696-5e21-42c1-8a5f-5f12d0ab0e54)
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
